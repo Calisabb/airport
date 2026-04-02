@@ -28,6 +28,11 @@ namespace ConsoleApp8.models
         public string PasswordNo { get; set; }
         public int TicketCount { get; set; }
 
+        public override string ToString()
+        {
+            return $"Full Name:{Name + " " + Surname}, Age:{Age}, Password number:{PasswordNo} Tickets: {TicketCount}";
+        }
+
 
     }
 }

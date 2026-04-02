@@ -11,16 +11,18 @@ namespace ConsoleApp8.models
         static int _no;
         public int No;
         public string Destination { get; set; }
-        List<Passenger> passengers  = new List<Passenger>();
+        internal List<Passenger> passengers  = new List<Passenger>();
 
         public int SeatLimit { get; set; }
 
 
-        public Flight(int seat_lim)
+        public Flight(int seat_lim, string destination)
         {
             SeatLimit = seat_lim;
             _no++;
             No = _no;
+            Destination = destination;
+            
         }
 
         public void AddPassenger(Passenger p)
@@ -39,18 +41,25 @@ namespace ConsoleApp8.models
         { 
             foreach (Passenger p in passengers)
             { 
-                if (p.Id == id)
+                p.TicketCount--;
+                if (p.Id == id && p.TicketCount > 0)
                 {
+
+                    Console.WriteLine($"Passenger have {p.TicketCount} more tickets ");
+
+                }
+                else if (p.Id == id && p.TicketCount == 0)
+                { 
                     passengers.Remove(p);
-                    p.TicketCount--;
-                    Console.WriteLine("passenger uchdu cole");
-                    
+                    Console.WriteLine("Passenger uchdu cole");
+                
                 }
                 else
                 {
+
                     throw new Exception("BELE passenger yoxdu");
-                    
-                    
+
+
                 }
                 break;
             }
@@ -84,6 +93,7 @@ namespace ConsoleApp8.models
 
 
         }
+
         public List<Passenger> GetAllPassengers()
         {
             return passengers;
@@ -100,22 +110,15 @@ namespace ConsoleApp8.models
                     byAge.Add(p);
                 }
             }
+            if (byAge.Count == 0)
+            {
+                Console.WriteLine("Bu yaş aralığında sərnişin yoxdur");
+                return byAge;
+            }
             return byAge;
         }
 
-        public List<Passenger> GetAllPasengersByDestination(string destination)
-        {
-            List<Passenger> byDest = new List<Passenger>();
-            foreach (Passenger p in passengers)
-            {
-                if (p.Destination == )
-                {
-                    byDest.Add(p);
-                }
-            }
-            return byDest;
 
-        }
 
         public string GetFlightInfo()
         {
